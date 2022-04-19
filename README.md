@@ -35,3 +35,10 @@
 # các lệnh khác
     --> git remote add origin https://github.com/username/new_repo
 
+---> postgres set seq
+
+SELECT MAX(id) FROM goose_db_version
+
+SELECT nextval('goose_db_version_id_seq');
+
+SELECT setval('goose_db_version_id_seq', (SELECT MAX(id) FROM goose_db_version));
