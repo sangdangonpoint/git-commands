@@ -42,3 +42,27 @@ SELECT MAX(id) FROM goose_db_version
 SELECT nextval('goose_db_version_id_seq');
 
 SELECT setval('goose_db_version_id_seq', (SELECT MAX(id) FROM goose_db_version));
+
+
+func ReadJsonGetmessages() ([]model.Message, error) {
+
+	jsonFile, err := os.Open("./jsons/shopee-message.json")
+	if err != nil {
+		return nil, err
+	}
+
+	defer jsonFile.Close()
+
+	byteValue, _ := ioutil.ReadAll(jsonFile)
+
+	var result response.GetMessagesResponse
+
+	er := json.Unmarshal([]byte(byteValue), &result)
+	if er != nil {
+		return nil, err
+	}
+
+	return result.Response.Messages, nil
+
+}
+
